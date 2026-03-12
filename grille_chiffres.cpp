@@ -7,7 +7,7 @@
 #include "grille_chiffres.h"
 #include "liste_couples.h"
 
-int verifier_ch_voisins(const t_grille_nos grille, int lig, int col, int chif) {
+static int verifier_ch_voisins(const t_grille_nos grille, int lig, int col, int chif) {
 
     //Vérifier si le case d'en haut existe
     if (lig-1>=0) {
@@ -155,7 +155,7 @@ int init_grille(t_grille_nos grille, t_tab_chiffres nbr_chiffres) {
 }
 
 //Création du couple, direction est, cas spécial
-void verifier_sens_est(t_grille_nos grille, int lig, int col, t_liste_couples liste){
+static void verifier_sens_est(t_grille_nos grille, int lig, int col, t_liste_couples liste){
 
     int lig2=lig; //Case à explorer
     int col2=col;
@@ -178,7 +178,7 @@ void verifier_sens_est(t_grille_nos grille, int lig, int col, t_liste_couples li
 }
 
 //Création des couples, vers tous les directions sauf est
-void verifier_huit_directions(t_grille_nos grille, int lig, int col, t_liste_couples liste) {
+static void verifier_huit_directions(t_grille_nos grille, int lig, int col, t_liste_couples liste) {
 
     int ligN = lig -1; //On va vers le nord
     int colN= col;
