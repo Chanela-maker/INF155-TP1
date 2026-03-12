@@ -288,3 +288,16 @@ void verifier_huit_directions(t_grille_nos grille, int lig, int col, t_liste_cou
     verifier_sens_est(grille, lig, col, liste);
 }
 
+int generer_listes_couples(t_grille_nos grille, int derniere_lig, t_liste_couples liste) {
+
+    init_liste_couples(liste);
+    
+    for (int lig=0; lig<=derniere_lig; lig++){
+        for (int col=1; col< NB_COL; col++) {
+            if (grille[lig][col] !=0) {
+                verifier_huit_directions(grille, lig, col, liste);
+            }
+        }
+    }
+    return nb_couples(liste);
+}
