@@ -153,6 +153,30 @@ int init_grille(t_grille_nos grille, t_tab_chiffres nbr_chiffres) {
     }
     return lig;
 }
+
+//Création du couple, direction est, cas spécial
+void verifier_sens_est(t_grille_nos grille, int lig, int col, t_liste_couples liste){
+
+    int lig2=lig; //Case à explorer
+    int col2=col;
+    int chiffre1= grille[lig][col];
+
+    INC_POS (lig2, col2); //On débute
+
+    while (col2< NB_COL && grille[lig2][col2]==0) { //On saut les 0
+
+        INC_POS(lig2, col2); //On avance grâce à la macro-fonction vers la droite
+    }
+    if (col2<NB_COL) { //Vérifie si on est encore dans la grille
+        int chiffre2= grille[lig2][col2];
+
+        if (chiffre1==chiffre2 || chiffre1+chiffre2==10) {
+            ajouter_couple(liste, lig*10+col, lig2*10+col2);
+        }
+    }
+
+}
+
 //Création des couples, vers tous les directions sauf est
 void verifier_huit_directions(t_grille_nos grille, int lig, int col, t_liste_couples liste) {
 
@@ -167,7 +191,7 @@ void verifier_huit_directions(t_grille_nos grille, int lig, int col, t_liste_cou
         int chiffre2= grille[ligN][colN]; // Le chiffre retrouvé grâce au while (le couple est fait)
         //Vérifier si c'est un bon couple et l'ajouter dans la liste
         if (chiffre1==chiffre2 || chiffre1 +chiffre2==10) {
-            ajouter_couple(liste, , ); //Vérifier quoi mettre!!!!!
+            ajouter_couple(liste, lig*10+col, ligN*10+colN); 
         }
     }
 
@@ -182,9 +206,10 @@ void verifier_huit_directions(t_grille_nos grille, int lig, int col, t_liste_cou
 
         //Vérifier si c'Est un bon couple et on l'ajoute dans la liste
         if (chiffre1==chiffre2 || chiffre1 +chiffre2 ==10){
-            ajouter_couple(liste, , );
+            ajouter_couple(liste, lig*10+col, ligO*10+colO);
         }
     }
+    
     int ligS= lig+1;
     int colS= col;
 
@@ -196,9 +221,10 @@ void verifier_huit_directions(t_grille_nos grille, int lig, int col, t_liste_cou
 
         //Vérifier si c'est un bon couple et on l'ajoute dans la liste
         if (chiffre1==chiffre2 || chiffre1 +chiffre2 ==10){
-            ajouter_couple(liste, , );
+            ajouter_couple(liste, lig*10+col, ligS*10+colS);
         }
     }
+    
     int ligNO= lig-1; //Vers le nord-ouest
     int colNO= col-1;
 
@@ -208,11 +234,12 @@ void verifier_huit_directions(t_grille_nos grille, int lig, int col, t_liste_cou
     }
     if (ligNO>=0 && colNO >=1) {
         int chiffre2= grille[ligNO][colNO];
-        //Vérifier si c'Est un bon couple et si c'est le cas on l'ajoute dans la liste
+        //Vérifier si c'est un bon couple et si c'est le cas on l'ajoute dans la liste
         if (chiffre1==chiffre2 || chiffre1 + chiffre2==10) {
-            ajouter_couple(liste, , );
+            ajouter_couple(liste, lig*10+col, ligNO*10+colNO);
         }
     }
+    
     int ligNE= lig-1;
     int colNE= col+1;
 
@@ -224,9 +251,10 @@ void verifier_huit_directions(t_grille_nos grille, int lig, int col, t_liste_cou
         int chiffre2= grille[ligNE][colNE];
         //Vérifiez si le couple est correct et on l'ajoute dans la liste
         if (chiffre1==chiffre2 || chiffre1+chiffre2==10) {
-            ajouter_couple(liste, , );
+            ajouter_couple(liste, lig*10+col, ligNE*10+colNE);
         }
     }
+    
     int ligSO=lig+1;
     int colSO=col-1;
 
@@ -238,9 +266,10 @@ void verifier_huit_directions(t_grille_nos grille, int lig, int col, t_liste_cou
         int chiffre2= grille[ligSO][colSO];
         //Vérifiez si le couple est correct et on l'ajoute dans la liste
         if (chiffre1==chiffre2 || chiffre1+chiffre2==10) {
-            ajouter_couple(liste, , );
+            ajouter_couple(liste, lig*10+col, ligSO*10+colSO);
         }
     }
+    
     int ligSE= lig+1;
     int colSE= col+1;
 
@@ -252,32 +281,10 @@ void verifier_huit_directions(t_grille_nos grille, int lig, int col, t_liste_cou
         int chiffre2= grille[ligSE][colSE];
         //Vérifiez si le couple est correct et on l'ajoute dans la liste
         if (chiffre1==chiffre2 || chiffre1+chiffre2==10) {
-            ajouter_couple(liste, , );
+            ajouter_couple(liste, lig*10+col, ligSE*10+colSE);
         }
     }
     //Vérifiez direction est
     verifier_sens_est(grille, lig, col, liste);
 }
 
-//Création du couple, direction est, cas spécial
-void verifier_sens_est(t_grille_nos_grille, int lig, int col, t_liste_couples liste){
-
-    int lig2=lig; //Case à explorer
-    int col2=col;
-    int chiffre1= grille[lig][col];
-
-    INC_POS (lig2, col2); //On débute
-
-    while (col2< MAX_LIG && grille[lig2][col2]==0) { //On saut les 0
-
-        INC_POS(lig2, col2); //On avance grâce à la macro-fonction vers la droite
-    }
-    if (lig2<MAX_LIG) { //Vérifie si on est encore dans la grille
-        int chiffre2= grille[lig2][col2];
-
-        if (chiffre1==chiffre2 || chiffre1+chiffre2==10) {
-            ajouter_couple(liste, , );
-        }
-    }
-
-}
