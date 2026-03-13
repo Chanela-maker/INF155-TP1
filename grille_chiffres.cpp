@@ -301,3 +301,54 @@ int generer_listes_couples(t_grille_nos grille, int derniere_lig, t_liste_couple
     }
     return nb_couples(liste);
 }
+//On retire la ligne vide de la grille de chiffres
+void retirer_ligne(t_grille_nos grille, int no_lig) {
+
+    //on arrête pas tant-> ligne 19 et ligne actuelle vide
+    while (no_lig< MAX_LIG - 1 && grille[no_lig][0]==0) {
+        for (int col=0; col<NB_COL; col++) {
+            grille[no_lig][col]= grille[no_lig+1][col]; //ex: L2<-L3
+        }
+        no_lig++;
+    }
+}
+
+//Éffacer un chiffre dans la grille
+void effacer_chiffre(t_grille_nos grille, int pos) {
+
+    int lig= pos/10;
+    int col= pos%10;
+
+    grille[lig][col]=0; //Mettre un 0 = case vide
+
+    grille[lig][0]--; //décrementer le compteur du nb de chiffres sur cette ligne
+
+}
+
+//Mettre à jour le tableau nbr_chiffres()
+int  retirer_chiffre(int ch, t_tab_chiffres nbr_chiffres) {
+
+    nbr_chiffres[ch]--;
+
+    if (nbr_chiffres[ch]==0) {
+        nbr_chiffres[0]--;
+        return ch;
+    } else {
+        return 0;
+    }
+}
+
+//Reçoit un numéro de case et retourne le chiffre qui se trouve dans cette case
+int  get_chiffre_case(const t_grille_nos grille, int no_case) {
+
+    int lig= no_case/10;
+    int col= no_case%10;
+
+    return grille[lig][col];
+}
+
+//Retourne le nombre de chiffres différents encore disponibles
+int  nb_chiffres_restants(const t_tab_chiffres nbr_chiffres) {
+
+    return nbr_chiffres[0];
+}
